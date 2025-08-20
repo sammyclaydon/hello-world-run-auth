@@ -1,13 +1,12 @@
-import os
-from flask import Flask
+import requests
 
-app = Flask(__name__)
+XANO_URL = "https://xj91-rcis-izm2.n2.xano.io/api:7KqKEvF6/gcr_testing"
 
-@app.route("/")
-def hello_world():
-    """Example Hello World route."""
-    name = os.environ.get("NAME", "World")
-    return f"Hello {name}!"
+payload = {"text": "hello world"}
 
-if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+try:
+    r = requests.post(XANO_URL, json=payload, timeout=10)
+    print("✅ Success:", r.status_code)
+    print("Response:", r.text)
+except requests.RequestException as e:
+    print("❌ Request failed:", e)
