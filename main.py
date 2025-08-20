@@ -1,6 +1,6 @@
 import os
 import requests
-from flask import Flask
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
@@ -19,9 +19,10 @@ def run_on_startup():
 def home():
     return "OK"
 
-if __name__ == "__main__":
-    # runs once per container start
-    run_on_startup()
+@app.route("/health")
+def health():
+    return jsonify(status="ok"), 200
 
-    # start HTTP server
+if __name__ == "__main__":
+    run_on_startup()
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
