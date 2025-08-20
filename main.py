@@ -5,7 +5,7 @@ from flask import Flask, jsonify
 app = Flask(__name__)
 
 XANO_URL = "https://xj91-rcis-izm2.n2.xano.io/api:7KqKEvF6/gcr_testing"
-_ran = False  # flag to prevent multiple calls
+# _ran = False  # flag to prevent multiple calls
 
 def run_on_startup():
     payload = {"text": "hello world 2"}
@@ -16,12 +16,12 @@ def run_on_startup():
     except requests.RequestException as e:
         print("❌ Request failed:", e)
 
-@app.before_request
-def trigger_once():
-    global _ran
-    if not _ran:
-        run_on_startup()
-        _ran = True
+# @app.before_request
+# def trigger_once():
+#     global _ran
+#     if not _ran:
+#         run_on_startup()
+#         _ran = True
 
 @app.route("/")
 def home():
